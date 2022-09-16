@@ -1,0 +1,24 @@
+const int trig = 3
+const int echo = 5
+int distance;
+long duration;
+
+void setup() {
+  
+pinMode(trig,OUTPUT);
+pinMode(echo,INPUT);
+Serial.begin(9600);
+}
+
+void loop() {
+
+digitalWrite(trig,LOW);
+delay(2);
+digitalWrite(trig,HIGH);
+delay(10);
+digitalWrite(trig,LOW);
+d=pulseIn(echo,HIGH);
+distance= d*0.034/2;
+Serial.print("Distance:");
+Serial.print("diatance);
+}

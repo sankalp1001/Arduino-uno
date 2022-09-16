@@ -1,0 +1,43 @@
+#include<Wire.h>
+int slaveadd=9;
+int push=4;
+
+void setup()
+{
+  Wire.begin();
+  pinMode(push,INPUT);
+}
+
+void loop()
+{
+  if(digitalRead(push)== HIGH){ 
+  Wire.beginTransmission(slaveadd);
+  Wire.write(1);
+  Wire.endTransmission();
+  }
+  else 
+  Wire.beginTransmission(slaveadd);
+  Wire.write(0);
+  Wire.endTransmission();
+  
+}
+-----------------------------------------------------------------------
+#include<Wire.h>
+  int led=2;
+  int x;
+  int slaveadd=9;
+  void setup(){
+    pinMode(led,OUTPUT);
+    Wire.begin(slaveadd);
+    Wire.onReceive(receiveEvent); 
+  }
+  void receiveEvent(){
+    while(0<Wire.available()){
+      x = Wire.read();
+    }
+    if(x==1){
+      digitalWrite(led,HIGH);
+    }
+    else
+    digitalWrite(led,LOW);
+  }

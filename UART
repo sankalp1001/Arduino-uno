@@ -1,0 +1,39 @@
+int PUSH = 7;
+int val;
+void setup()
+{
+pinMode(PUSH,INPUT);
+Serial.begin(9600);  
+}
+
+void loop()
+{
+val=digitalRead(PUSH);
+  if(val==HIGH){
+    Serial.write(1);
+  }  
+  else{
+    Serial.write(0);
+  }
+}
+-------------------------------------------------------------------------------------------------------------
+
+int Led =8;
+int val;
+void setup(){
+  pinMode(Led,OUTPUT);
+  Serial.begin(9600);
+}
+void loop(){
+if(Serial.available()>0){
+  val=Serial.read();
+  if (val==1){
+    digitalWrite(Led,HIGH);
+    }
+   else if(val==0){
+    digitalWrite(Led,LOW);
+   }
+   
+  }
+  
+}

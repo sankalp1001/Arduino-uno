@@ -1,0 +1,133 @@
+int x=0;
+ int y=0;
+ int dirL = 2;
+ int dirR = 4;
+ int spdledL = 9;
+ int spdledR = 10; 
+ int spdL;
+ int spdR;
+void setup() {
+ Serial.begin(9600);
+
+}
+
+void loop() { 
+  x=analogRead(A0);  
+  y=analogRead(A1);
+  //x=map(x,0,1023,0,255);
+  //y=map(y,0,1023,0,255);
+  Serial.print("X=");  
+  Serial.print(x);
+  Serial.print("Y=");
+  Serial.println(y);
+  //left direction 
+  if( x+y<1023){
+    digitalWrite(2,HIGH);
+  }
+  else{digitalWrite(2,LOW);}
+  //right direction
+  if (y>x){
+    digitalWrite(4,HIGH);  
+   }   
+   else {digitalWrite(4,LOW);}
+
+  // 1st octant
+   if(y>=x && y<=489){
+    spdL=map(x,504,0,0,255);
+    spdR=map(y,489,x,spdL ,0);
+    if(spdR==1){spdR=0;}
+    Serial.print("spdL=" );
+    Serial.print(spdL);
+    Serial.print("spdR=" );
+    Serial.print(spdR);
+    analogWrite(spdledL,spdL);
+    analogWrite(spdledR,spdR);  
+ } 
+ //2nd octant 
+ else if(x+y<=1023 && y>489){
+    spdR=map(x,504,0,0,255);
+    spdL=map(y,489,1023-x,spdR,0);
+    if(spdL>255){spdL=0;}
+    Serial.print("spdL=" );
+    Serial.print(spdL);
+    Serial.print("spdR=" );
+    Serial.print(spdR);
+    analogWrite(spdledL,spdL);
+    analogWrite(spdledR,spdR);
+ }
+  //3rd octant 
+ else if(x+y>1023 && x<=504){
+    spdR=map(y,489,1023,0,255);
+    spdL=map(x,504,1023-x,spdR,0);
+    if(spdL>255){spdL=0;}
+    Serial.print("spdL=" );
+    Serial.print(spdL);
+    Serial.print("spdR=" );
+    Serial.print(spdR);
+    analogWrite(spdledL,spdL);
+    analogWrite(spdledR,spdR);
+ } 
+
+ //4th octant  
+ else if(y>=x && x>504){
+    spdL=map(y,489,1023,0,255);
+    spdR=map(x,504,y,spdL,0);
+   if (spdR=1){spdR=0;}
+    Serial.print("spdL=" );
+    Serial.print(spdL);
+    Serial.print("spdR=" );
+    Serial.print(spdR);
+    analogWrite(spdledL,spdL);
+    analogWrite(spdledR,spdR);
+ }
+ //5th octant 
+ else if(x>=y && y>489){
+    spdL=map(x,504,1023,0,255);
+    spdR=map(y,489,x,spdL,0);
+    //if (spdR=1){spdR=0;}
+    Serial.print("spdL=" );
+    Serial.print(spdL);
+    Serial.print("spdR=" );
+    Serial.print(spdR);
+    analogWrite(spdledL,spdL);
+    analogWrite(spdledR,spdR);
+ }
+ //6th octant 
+ else if(x+y>=1023 && y<489){
+    spdR=map(x,512,1023,0,255);
+    spdL=map(y,512,1023-x,spdR,0);
+    
+    Serial.print("spdL=" );
+    Serial.print(spdL);
+    Serial.print("spdR=" );
+    Serial.print(spdR);
+    analogWrite(spdledL,spdL);
+    analogWrite(spdledR,spdR);
+ }
+ //7th octant  
+ else if(x+y<1023 && x>504){
+    spdR=map(x,504,1023,0,255);
+    spdL=map(y,489,1023-x,spdR,0);
+    if  (spdL<0){spdL=0;}
+    Serial.print("spdL=" );
+    Serial.print(spdL);
+    Serial.print("spdR=" );
+    Serial.print(spdR);
+    analogWrite(spdledL,spdL);
+    analogWrite(spdledR,spdR);
+ }
+  //8th octant 
+  else if(y<=x && x<=504){
+    spdL=map(y,489,0,0,255);
+    spdR=map(x,504,y,spdL,0);
+    if(spdR==1){spdR=0;}
+    Serial.print("spdL=" );
+    Serial.print(spdL);
+    Serial.print("spdR=" );
+    Serial.print(spdR);
+    analogWrite(spdledL,spdL);
+    analogWrite(spdledR,spdR);
+  } 
+ else if(x==504 && y==489){analogWrite(spdledL,0);
+ analogWrite(spdledR,0);} 
+}

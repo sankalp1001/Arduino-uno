@@ -1,0 +1,61 @@
+ int pushCount=0;
+ int prevVal = 1;
+ int curVal = 1;
+ int newVal = 0;
+ int PUSH = 2;
+ int LED = 4;
+ int Curstate;
+ int Prestate = LOW;
+ int ledState = 0;	
+void setup(){
+  pinMode(LED, OUTPUT);
+  pinMode(PUSH,INPUT);
+  Serial.begin(9600);
+}    
+void loop() {
+  
+  Curstate=digitalRead(PUSH);
+     if (Curstate!=Prestate){
+       if(Curstate == HIGH){
+       		pushCount++ ;
+         	ledState=1;
+       		
+      }
+       		Prestate=Curstate;
+     }
+  if(pushCount==1 && ledState==1){
+     digitalWrite(LED,HIGH);
+     delay(1000);
+     digitalWrite(LED,LOW);
+     delay(1000);
+     Serial.print("1 ");
+     Serial.print("pushcount:");
+     Serial.println(pushCount);
+    ledState=0;
+     }
+  if(pushCount==2 && ledState==1){  
+     digitalWrite(LED,HIGH);
+     delay(1000);
+     digitalWrite(LED,LOW);
+     delay(1000);
+     Serial.print("1 ");
+     Serial.print("pushcount:");
+     Serial.println(pushCount);
+     ledState=0;
+    } 
+  if (pushCount>=3 && ledState==1){
+    newVal = curVal + prevVal;
+    prevVal = curVal;
+    curVal = newVal;
+    Serial.print(curVal);
+    Serial.print(" pushcount:");
+    Serial.println(pushCount); 
+      for(int i=0; i<curVal;i++){
+      digitalWrite(LED,HIGH);
+      delay(1000);
+      digitalWrite(LED,LOW);
+      delay(1000); 
+      ledState=0;  
+     }
+  }
+}   
